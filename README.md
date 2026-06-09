@@ -34,24 +34,20 @@ The environment is deployed with Terraform and includes:
 
 ```mermaid
 flowchart LR
-    ATT["Attacker / Analyst"]
-
-    subgraph AWS["AWS - eu-west-3"]
+    ATT["Attacker / analyst"]
+    subgraph AWS["AWS (eu-west-3)"]
         WZ["EC2 Wazuh<br/>Manager + Indexer + Dashboard"]
-        VIC["EC2 Target<br/>Ubuntu + Wazuh Agent"]
+        VIC["EC2 Target<br/>Ubuntu + Wazuh agent"]
         CT["CloudTrail"]
-        S3CT[("S3 Bucket<br/>CloudTrail Logs")]
-        S3DATA[("S3 Bucket<br/>Target Data")]
+        S3CT[("S3: CloudTrail logs")]
         IAM["IAM"]
     end
-
-    ATT -->|"HTTPS 443 - Dashboard"| WZ
-    ATT -->|"SSH brute force"| VIC
-    VIC -->|"Agent logs 1514/1515"| WZ
-    CT -->|"Writes API logs"| S3CT
-    S3CT -->|"Read by Wazuh aws-s3 module"| WZ
-    IAM -. "API actions tracked" .-> CT
-    S3DATA -. "Bucket policy changes tracked" .-> CT
+    ATT -->|HTTPS dashboard| WZ
+    ATT -->|SSH brute force| VIC
+    VIC -->|agent logs 1514| WZ
+    CT -->|writes logs| S3CT
+    S3CT -->|aws-s3 module reads| WZ
+    IAM -. tracked actions .-> CT
 ```
 
 ---
