@@ -1,0 +1,31 @@
+<group name="amazon,aws,cloud,">
+
+  <rule id="100010" level="12">
+    <if_sid>80200</if_sid>
+    <field name="aws.eventName">^PutBucketAcl$|^PutBucketPolicy$|^PutBucketPublicAccessBlock$|^DeletePublicAccessBlock$</field>
+    <description>AWS S3: modification de l'acces public d'un bucket ($(aws.eventName)) par $(aws.userIdentity.userName)</description>
+    <mitre>
+      <id>T1530</id>
+    </mitre>
+  </rule>
+
+  <rule id="100020" level="10">
+    <if_sid>80200</if_sid>
+    <field name="aws.eventName">^CreateAccessKey$</field>
+    <description>AWS IAM: creation d'une cle d'acces pour $(aws.requestParameters.userName) par $(aws.userIdentity.userName)</description>
+    <mitre>
+      <id>T1098</id>
+    </mitre>
+  </rule>
+
+  <rule id="100030" level="14">
+    <if_sid>80200</if_sid>
+    <field name="aws.eventName">^AttachUserPolicy$|^AttachRolePolicy$|^PutUserPolicy$</field>
+    <field name="aws.requestParameters.policyArn">AdministratorAccess</field>
+    <description>AWS IAM: ESCALADE DE PRIVILEGES - droits admin attaches par $(aws.userIdentity.userName)</description>
+    <mitre>
+      <id>T1078</id>
+    </mitre>
+  </rule>
+
+</group>

@@ -1,0 +1,36 @@
+# Terraform
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.*
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# SSH keys / secrets
+terraform/soc-key
+terraform/soc-key.pub
+soc-key
+soc-key.pub
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# AWS credentials
+.aws/
+credentials
+config
+.env
+*.env
+
+# Wazuh sensitive files
+wazuh-passwords.txt
+wazuh-install-files.tar
+
+# Local/private files
+docs/private/
+.DS_Store
+Thumbs.db
+docs/screenshots/soc_key.png
